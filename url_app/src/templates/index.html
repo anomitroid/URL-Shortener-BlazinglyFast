@@ -5,76 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rust URL Shortener</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { 
-            padding: 2rem; 
-            background-color: #f8f9fa;
-        }
-        .container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .short-url { 
-            font-family: monospace;
-            background-color: #e9ecef;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            color: #0d6efd;
-            text-decoration: none;
-            transition: background-color 0.2s;
-        }
-        .short-url:hover {
-            background-color: #dee2e6;
-        }
-        .stats { 
-            margin-top: 2rem; 
-        }
-        .table {
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .table th {
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #dee2e6;
-            padding: 1rem !important;
-        }
-        .table td {
-            padding: 1rem !important;
-            vertical-align: middle;
-        }
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-        .original-url {
-            max-width: 400px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .original-url a {
-            color: #495057;
-            text-decoration: none;
-        }
-        .original-url a:hover {
-            color: #0d6efd;
-        }
-        footer { 
-            margin-top: 3rem; 
-            text-align: center; 
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        .form-container {
-            background-color: #f8f9fa;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <div class="container">
@@ -119,15 +50,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <script>
-        new ClipboardJS('.short-url', {
-            text: function(trigger) {
-                return window.location.origin + trigger.getAttribute('href');
-            }
-        }).on('success', function(e) {
-            alert('URL copied to clipboard!');
-            e.clearSelection();
-        });
-    </script>
+    <script src="/static/js/app.js"></script>
 </body>
 </html>
