@@ -1,20 +1,22 @@
-use serde::{Deserialize, Serialize};
-use std::fmt;
+use actix_web::{HttpResponse, ResponseError};
+use thiserror::Error;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct UrlEntry {
-    pub original_url: String,
-    pub short_id: String,
-    pub clicks: u64,
-    pub created_at: chrono::DateTime<chrono::Utc>,
+#[derive(Error, Debug)]
+pub enum AppError {
+    #[error("Invalid URL format")]
+    InvalidUrl,
+    #[error("Short URL not found")]
+    NotFound,
+    #[error("Internal server error")]
+    InternalError,
 }
 
-impl fmt::Display for UrlEntry {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Shortened: {} -> {} (Clicks: {})",
-            self.short_id, self.original_url, self.clicks
-        )
+impl ResponseError for AppError {
+    fn error_response(&self) -> HttpResponse {
+        match self {
+            AppError::InvalidUrl => HttpResponse::BadRequest().body(self.to_string()),
+            AppError::NotFound => HttpResponse::NotFound().body(self.to_string()),
+            AppError::InternalError => HttpResponse::InternalServerError().body(self.to_string()),
+        }
     }
 }
