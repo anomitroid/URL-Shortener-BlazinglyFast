@@ -1,7 +1,7 @@
 pub mod frontend;
 pub mod api;
 pub mod redirect;
-// pub mod static_files;
+pub mod static_files;
 
 use lazy_static::lazy_static;
 
