@@ -28,22 +28,22 @@ The application provides a simple web form interface for users to input URLs and
 ### Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/url-shortener.git
-    cd url-shortener/url_app
+    git clone https://github.com/anomitroid/URL-Shortener-BlazinglyFast.git
+    cd URL-Shortener-BlazinglyFast/url_app
     ```
 
 2. Set up the PostgreSQL database:
     - Install PostgreSQL from [here](https://www.postgresql.org/download/).
     - Create a new database:
       ```sh
-      psql -U postgres
-      CREATE DATABASE url_shortener;
+      psql -h localhost -p 5432 -U postgres
+      CREATE DATABASE url_app;
       ```
 
 3. Configure the database connection:
     - Create a `.env` file in the [url_app](http://_vscodecontentref_/1) directory with the following content:
       ```env
-      DATABASE_URL=postgres://username:password@localhost/url_shortener
+      DATABASE_URL=postgres://username:password@localhost/url_app
       ```
 
 4. Run database migrations:
@@ -96,7 +96,7 @@ url-shortener/
 │   ├── Cargo.toml
 │   ├── Cargo.lock
 │   ├── migrations/
-│   │   └── 20230101000000_create_urls_table.sql
+│   │   └── 20250201162815_create_urls_table.sql
 │   ├── .cargo/
 │   │   └── config.toml
 ├── LICENSE
@@ -122,11 +122,11 @@ We welcome contributions! Here are some ways you can help:
 ## Technical Focus
 
 ### Modern Rust Code
-- Use Rust idioms and patterns.
-- Implement robust error handling.
-- Apply concurrency where it makes sense.
+- Used Rust idioms and patterns.
+- Implemented robust error handling.
+- Applied concurrency where it makes sense.
 
 ### System Design
-- Create clean, modular architecture.
-- Manage resources efficiently.
-- Keep the design scalable.
+- Created clean, modular architecture.
+- Managed resources efficiently.
+- Kept the design scalable.
