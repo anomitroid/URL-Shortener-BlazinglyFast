@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
     <title>Rust URL Shortener</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel = "stylesheet">
+    <link rel = "stylesheet" href = "/static/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mb-4">🔗 Rust URL Shortener <small class="text-muted">v{VERSION}</small></h1>
+    <div class = "container">
+        <h1 class = "mb-4">🔗 Rust URL Shortener <small class = "text-muted">v{VERSION}</small></h1>
         
-        <div class="form-container">
-            <form method="POST" action="/shorten" class="mb-0">
-                <div class="input-group">
-                    <input type="url" 
-                           name="url" 
-                           class="form-control form-control-lg" 
-                           placeholder="https://example.com" 
+        <div class = "form-container">
+            <form method = "POST" action = "/shorten" class = "mb-0">
+                <div class = "input-group">
+                    <input type = "url" 
+                           name = "url" 
+                           class = "form-control form-control-lg" 
+                           placeholder = "https://example.com" 
                            required
-                           pattern="https?://.+">
-                    <button type="submit" class="btn btn-primary btn-lg">Shorten URL</button>
+                           pattern = "https?://.+">
+                    <button type = "submit" class = "btn btn-primary btn-lg">Shorten URL</button>
                 </div>
             </form>
         </div>
 
-        <div class="stats">
-            <h4 class="mb-4">Recently Shortened URLs</h4>
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
+        <div class = "stats">
+            <h4 class = "mb-4">Recently Shortened URLs</h4>
+            <div class = "table-responsive">
+                <table class = "table table-hover mb-0">
                     <thead>
                         <tr>
                             <th>Original URL</th>
                             <th>Short URL</th>
-                            <th class="text-center">Clicks</th>
+                            <th class = "text-center">Clicks</th>
                             <th>Created</th>
                         </tr>
                     </thead>
@@ -45,11 +45,11 @@
         </div>
 
         <footer>
-            <p class="mb-0">Developed by Anomitro, Utsav, Shivansh, Aaryan and Aditya using Rust</p>
+            <p class = "mb-0">Developed by Anomitro, Utsav, Shivansh, Aaryan and Aditya using Rust</p>
         </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script src = "/static/js/app.js"></script>
 </body>
 </html>
