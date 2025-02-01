@@ -1,29 +1,29 @@
-pub mod templates;
-pub mod handlers;
-pub mod routes;
-
 use actix_web::{web, App, HttpServer};
-use std::io;
+use dashmap::DashMap;
+use std::sync::Arc;
 
-pub struct Application {
-    server: actix_web::dev::Server,
+mod handlers;
+mod models;
+mod routes;
+mod templates;
+
+pub use models::UrlEntry;
+
+pub struct AppState {
+    pub store: Arc<DashMap<String, UrlEntry>>,
 }
 
-impl Application {
-    pub async fn build(bind_address: &str) -> Result<Self, io::Error> {
-        let templates = web::Data::new(templates::Templates::new());
-        let server = HttpServer::new(move || {
-            App::new()
-                .app_data(templates.clone())
-                .configure(routes::configure)
-        })
-        .bind(bind_address)?
-        .run();
-
-        Ok(Self { server })
-    }
-
-    pub async fn run_until_stopped(self) -> Result<(), io::Error> {
-        self.server.await
-    }
+pub async fn run() -> std::io::Result<()> {
+    let store = Arc::new(DashMap::new());
+    
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(AppState {
+                store: store.clone(),
+            }))
+            .configure(routes::configure)
+    })
+    .bind("localhost:3000")?
+    .run()
+    .await
 }

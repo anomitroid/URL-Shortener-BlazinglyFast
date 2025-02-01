@@ -1,8 +1,9 @@
 use actix_web::web;
-use crate::handlers::{index, submit};
+use crate::handlers;
 
 pub fn configure(cfg: &mut web::ServiceConfig) {
     cfg
-        .route("/", web::get().to(index::index))
-        .route("/submit", web::post().to(submit::handle_submit));
+        .route("/", web::get().to(handlers::index::index))
+        .route("/short_urls", web::post().to(handlers::short_urls::create_short_url))
+        .route("/{short_id}", web::get().to(handlers::redirect::redirect));
 }

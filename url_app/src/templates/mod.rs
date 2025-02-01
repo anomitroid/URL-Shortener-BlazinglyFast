@@ -1,11 +1,6 @@
-pub struct Templates {
-    pub index: &'static str,
-}
+use lazy_static::lazy_static;
 
-impl Templates {
-    pub fn new() -> Self {
-        Self {
-            index: include_str!(r"index.html"),
-        }
-    }
+lazy_static! {
+    pub static ref INDEX_TEMPLATE: String = include_str!(r"index.html")
+        .to_string();
 }

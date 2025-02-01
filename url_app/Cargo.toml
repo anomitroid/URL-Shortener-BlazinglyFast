@@ -3,6 +3,17 @@ name = "url_app"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "url_app"
+path = "src/lib.rs"
+
+[[bin]]
+name = "url_app"
+path = "src/main.rs"
+
 [dependencies]
 actix-web = "4.0"
 serde = { version = "1.0", features = ["derive"] }
+dashmap = "6.1.0"
+lazy_static = "1.4"
+uuid = { version = "1.0", features = ["v4"] }
