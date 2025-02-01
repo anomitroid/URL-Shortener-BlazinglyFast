@@ -1,11 +1,12 @@
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, Utc};
+use sqlx::FromRow;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct UrlEntry {
+    pub id: i32,
     pub original_url: String,
     pub short_id: String,
-    pub clicks: u64,
-    #[serde(with = "chrono::serde::ts_seconds")]
+    pub clicks: i64,
     pub created_at: DateTime<Utc>,
 }

@@ -1,5 +1,5 @@
 use actix_web::{web, HttpResponse};
-use crate::{AppState, models::UrlEntry};
+use crate::AppState;
 use url::Url;
 use nanoid::nanoid;
 
@@ -11,26 +11,25 @@ pub struct ShortenRequest {
 pub async fn shorten_url(
     form: web::Form<ShortenRequest>,
     data: web::Data<AppState>,
-) -> HttpResponse {
-    // Validate URL
-    let url = match Url::parse(&form.url) {
-        Ok(u) => u,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid URL format"),
-    };
+) -> Result<HttpResponse, crate::errors::AppError> {
+    let url = Url::parse(&form.url)
+        .map_err(|_| crate::errors::AppError::InvalidUrl)?;
 
-    // Generate short ID
     let short_id = nanoid!(8);
-    let created_at = chrono::Utc::now();
 
-    // Store entry
-    data.store.insert(short_id.clone(), UrlEntry {
-        original_url: url.to_string(),
-        short_id: short_id.clone(),
-        clicks: 0,
-        created_at,
-    });
+    sqlx::query!(
+        r#"
+        INSERT INTO urls (original_url, short_id)
+        VALUES ($1, $2)
+        "#,
+        url.to_string(),
+        short_id
+    )
+    .execute(&data.db)
+    .await
+    .map_err(|_| crate::errors::AppError::InternalError)?;
 
-    HttpResponse::SeeOther()
+    Ok(HttpResponse::SeeOther()
         .append_header(("Location", "/"))
-        .finish()
+        .finish())
 }

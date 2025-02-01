@@ -1,0 +1,8 @@
+-- Add migration script here
+CREATE TABLE IF NOT EXISTS urls (
+    id SERIAL PRIMARY KEY,
+    original_url TEXT NOT NULL,
+    short_id VARCHAR(10) NOT NULL UNIQUE,
+    clicks BIGINT NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,32 +1,41 @@
-use actix_web::{web, App, HttpServer};
-use dashmap::DashMap;
-use std::sync::Arc;
+use sqlx::PgPool;
+use actix_web::{web, HttpServer, App};
 
-mod handlers;
-mod models;
-mod routes;
-// mod templates;
-mod errors;
+pub mod db;
+pub mod models;
+pub mod handlers;
+pub mod routes;
+pub mod errors;
 
 pub use models::UrlEntry;
 
 #[derive(Debug, Clone)]
 pub struct AppState {
-    pub store: Arc<DashMap<String, UrlEntry>>,
+    pub db: PgPool,
 }
 
 pub async fn run() -> std::io::Result<()> {
-    let state = AppState{
-        store: Arc::new(DashMap::new()),
-    };
+    dotenvy::dotenv().ok();
     
+    let pool = db::create_pool()
+        .await
+        .expect("Failed to create database pool");
+
+    // Run migrations
+    sqlx::migrate!("./migrations")
+        .run(&pool)
+        .await
+        .expect("Failed to run database migrations");
+
+    let state = AppState { db: pool };
+
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(state.clone()))
             .configure(routes::configure)
             .wrap(actix_web::middleware::Logger::default())
     })
-    .bind("localhost:3000")?
+    .bind(("localhost", 3000))?
     .run()
     .await
 }
