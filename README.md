@@ -62,6 +62,22 @@ The application provides a simple web form interface for users to input URLs and
 2. Enter a URL in the input field and click "Shorten URL".
 3. The shortened URL will be displayed, and you can use it to redirect to the original URL.
 
+## Customizing the Port
+
+By default, the application runs on port `3000`. You can change this to any port you prefer by setting the `PORT` environment variable in the `.env` file.
+
+1. Open the `.env` file located in the `url_app` directory.
+2. Add or modify the `PORT` variable with your desired port number:
+    ```env
+    PORT=8080
+    ```
+3. Save the `.env` file and restart the application:
+    ```sh
+    cargo run
+    ```
+
+The application will now run on the port specified in the `.env` file.
+
 ## Project Structure
 
 ```plaintext
