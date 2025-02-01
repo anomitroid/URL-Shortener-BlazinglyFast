@@ -1,45 +1,18 @@
-use actix_web::{App, web, HttpResponse, HttpServer, Responder};
-use serde::Deserialize;
+use actix_web::{web, App, HttpServer};
+use templates::Templates;
 
-#[derive(Deserialize)]
-struct FormData {
-    url: String
-}
-
-async fn index() -> HttpResponse {
-    HttpResponse::Ok()
-        .content_type("text/html")
-        .body(
-            r#"
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>URL Shortener</title>
-            </head>
-            <body>
-                <h1>URL Shortener</h1>
-                <form method="post" action="/submit">
-                    <input type="text" name="url" placeholder="Enter URL" required>
-                    <button type="submit">Shorten</button>
-                </form>
-            </body>
-            </html>
-            "#
-        )
-}
-
-async fn handle_submit(form: web::Form<FormData>) -> impl Responder {
-    HttpResponse::Ok()
-        .content_type("text/html")
-        .body(format!("Recieved URL: {}", form.url))
-}
+mod templates;
+mod handlers;
+mod routes;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
+    let templates = web::Data::new(Templates::new());
+
+    HttpServer::new(move || {
         App::new()
-            .route("/", web::get().to(index))
-            .route("/submit", web::post().to(handle_submit))
+            .app_data(templates.clone())
+            .configure(routes::configure)
     })
     .bind("localhost:3000")?
     .run()

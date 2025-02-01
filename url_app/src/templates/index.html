@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang  =  "en">
+<head>
+    <meta charset  =  "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <title>URL-Shortener</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 2rem auto; 
+        }
+        .container { 
+            padding: 2rem; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+        }
+        input[type="text"] { 
+            width: 70%; 
+            padding: 8px; 
+            margin-right: 8px; 
+        }
+        button { 
+            padding: 8px 16px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class = "container">
+        <h1>URL Shortener</h1>
+        <form method = "POST" action = "/submit">
+            <input type = "text" name = "url" placeholder = "Enter URL (e.g., https://example.com)" required>
+            <button type = "submit">Shorten</button>
+        </form>
+    </div>
+</body>
+</html>
