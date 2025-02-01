@@ -8,17 +8,19 @@ pub async fn index_handler(data: web::Data<AppState>) -> impl Responder {
     for entry in store.iter() {
         rows.push_str(&format!(
             r#"<tr>
-                <td><a href="{}" target="_blank">{}</a></td>
-                <td><a href="/{}" class="short-url">/{}</a></td>
-                <td>{}</td>
-                <td>{}</td>
+                <td class="original-url"><a href="{0}" target="_blank" title="{0}">{1}</a></td>
+                <td><a href="/{2}" class="short-url" title="click to copy">/{2}</a></td>
+                <td class="text-center">{3}</td>
+                <td>{4}</td>
             </tr>"#,
             entry.original_url,
-            entry.original_url,
-            entry.short_id,
+            if entry.original_url.len()>50{format!("{}...", &entry.original_url[..50])}
+            else{
+                entry.original_url.clone()
+            },
             entry.short_id,
             entry.clicks,
-            entry.created_at.format("%Y-%m-%d %H:%M:%S")
+            entry.created_at.format("%b %d, %Y at %H:%M")
         ));
     }
 
