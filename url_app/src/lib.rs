@@ -21,6 +21,11 @@ pub async fn run() -> std::io::Result<()> {
         .await
         .expect("Failed to create database pool");
 
+    let port = std::env::var("PORT")
+        .ok()
+        .and_then(|p| p.parse().ok())
+        .unwrap_or(3000);
+
     // Run migrations
     sqlx::migrate!("./migrations")
         .run(&pool)
@@ -35,7 +40,7 @@ pub async fn run() -> std::io::Result<()> {
             .configure(routes::configure)
             .wrap(actix_web::middleware::Logger::default())
     })
-    .bind(("localhost", 3000))?
+    .bind(("localhost", port))?
     .run()
     .await
 }
