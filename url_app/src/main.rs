@@ -1,20 +1,6 @@
-use actix_web::{web, App, HttpServer};
-use templates::Templates;
-
-mod templates;
-mod handlers;
-mod routes;
-
+use url_app::Application;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let templates = web::Data::new(Templates::new());
-
-    HttpServer::new(move || {
-        App::new()
-            .app_data(templates.clone())
-            .configure(routes::configure)
-    })
-    .bind("localhost:3000")?
-    .run()
-    .await
+    let app = Application::build("localhost:3000").await?;
+    app.run_until_stopped().await
 }
