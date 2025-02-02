@@ -63,8 +63,8 @@ pub async fn index_handler(
                 <td class="original-url"><a href="{0}" target="_blank" title="{0}">{1}</a></td>
                 <td><a href="/{2}" class="short-url" title="Click to copy" target="_blank">{2}</a></td>
                 <td><img src="{5}" class="qr-code" onclick="enlargeQR(this)" style="width: 50px; cursor: pointer;"/></td>
-                <td class="text-center">{3}</td>
-                <td>{4}</td>
+                <td class="text-center clicks">{3}</td>
+                <td class="createdTime">{4}</td>
             </tr>"#,
             entry.original_url,
             if entry.original_url.len() > 50 {
