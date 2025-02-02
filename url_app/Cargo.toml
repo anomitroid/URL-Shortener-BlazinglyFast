@@ -32,3 +32,6 @@ sqlx = { version = "0.8.3", features = [
 ]}
 tokio = { version = "1", features = ["full"] }
 dotenvy = "0.15"
+qrcode-generator ="5.0.0"
+base64 = "0.22.1"
+log = "0.4.25"

@@ -9,4 +9,5 @@ pub struct UrlEntry {
     pub short_id: String,
     pub clicks: i64,
     pub created_at: DateTime<Utc>,
+    pub qr_code: String,
 }

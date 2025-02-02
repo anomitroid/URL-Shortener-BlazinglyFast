@@ -33,8 +33,9 @@
                         <tr>
                             <th>Original URL</th>
                             <th>Short URL</th>
+                            <th>QR Code</th>
                             <th class = "text-center">Clicks</th>
-                            <th>Created</th>
+                            <th>Created (UTC)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,5 +52,12 @@
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src = "/static/js/app.js"></script>
+
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="enlargedQR" style="width: 100%;">
+        </div>
+    </div>
 </body>
 </html>
