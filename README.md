@@ -19,6 +19,18 @@ The application includes comprehensive error handling to manage various error sc
 ### Simple Web Form Interface
 The application provides a simple web form interface for users to input URLs and receive shortened URLs. The form is defined in the [templates/index.html](url_app/src/templates/index.html) file, and the form submission is handled by the `index_handler` function in the [handlers/frontend.rs](url_app/src/handlers/frontend.rs) file.
 
+### Extra Feature: QR Code Generation
+
+The application includes an additional feature to generate QR codes for shortened URLs, enhancing the ease of sharing and accessibility. This functionality is implemented using the `qrcode` crate within the `generate_qr_code` function located in the [handlers/api.rs](url_app/src/handlers/api.rs) file. When a URL is shortened, a corresponding QR code is generated and saved in the `static/qr_codes` directory. The generated QR code is then displayed alongside the shortened URL in the web form interface.
+
+### How It Works
+1. **URL Shortening**: When a user submits a URL to be shortened, the application generates a short ID for the URL.
+2. **QR Code Generation**: Simultaneously, the `generate_qr_code` function creates a QR code for the shortened URL using the `qrcode` crate.
+3. **Storage**: The QR code image is saved in the `static/qr_codes` directory with a filename corresponding to the short ID.
+4. **Display**: The web form interface is updated to display the QR code image alongside the shortened URL, allowing users to scan the code with their mobile devices to access the original URL.
+
+This feature provides a convenient way for users to share shortened URLs, especially in scenarios where typing a URL is impractical. By scanning the QR code, users can quickly and easily access the original URL on their mobile devices.
+
 ## Getting Started
 
 ### Prerequisites
