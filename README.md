@@ -63,6 +63,7 @@ This feature provides a convenient way for users to share shortened URLs, especi
 
     **For Windows:**
     - Follow the instructions provided by Microsoft to install WSL (Windows Subsystem for Linux). The default Linux distribution installed is typically Ubuntu.
+    - Click on the windows button and type Ubuntu to open the Ubuntu terminal. You might need to download the Ubuntu Application from Windows Store.
     - Once Ubuntu is running on Windows, add the Redis repository to the apt index, update it, and install Redis:
         ```sh
         sudo apt-add-repository ppa:redislabs/redis
