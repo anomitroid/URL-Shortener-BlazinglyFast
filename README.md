@@ -1,4 +1,4 @@
-# URL-Shortener-BlazinglyFast
+# crate.ly
 
 This project is a URL shortener application built with Rust. It provides URL shortening functionality, redirect handling, data persistence, and error handling through a simple web form interface.
 
