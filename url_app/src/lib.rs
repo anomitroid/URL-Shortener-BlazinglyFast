@@ -1,3 +1,4 @@
+use db::RedisPool;
 use sqlx::PgPool;
 use actix_web::{web, HttpServer, App};
 
@@ -12,6 +13,7 @@ pub use models::UrlEntry;
 #[derive(Debug, Clone)]
 pub struct AppState {
     pub db: PgPool,
+    pub redis: RedisPool
 }
 
 pub async fn run() -> std::io::Result<()> {
@@ -32,8 +34,9 @@ pub async fn run() -> std::io::Result<()> {
         .await
         .expect("Failed to run database migrations");
 
-    let state = AppState { db: pool };
-
+        let redis_pool = db::create_redis_pool().await.expect("Failed to create Redis pool");
+        let state = AppState { db: pool, redis: redis_pool };
+    
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(state.clone()))

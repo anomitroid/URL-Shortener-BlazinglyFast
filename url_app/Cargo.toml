@@ -35,3 +35,6 @@ dotenvy = "0.15"
 qrcode-generator ="5.0.0"
 base64 = "0.22.1"
 log = "0.4.25"
+bb8 = "0.9.0"
+bb8-redis = "0.20.0"
+redis = { version = "0.28.2", features = ["aio"] }
