@@ -106,7 +106,7 @@ This feature provides a convenient way for users to share shortened URLs, especi
 4. Configure the database connection:
     - Create a `.env` file in the [url_app](http://_vscodecontentref_/1) directory with the following content:
       ```env
-      DATABASE_URL=postgresql://username:password@localhost/url_app
+      DATABASE_URL=postgresql://postgres:password@localhost/url_app
       BASE_URL=http://localhost:3000
       REDIS_URL=redis://localhost/
       ```
