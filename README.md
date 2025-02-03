@@ -89,9 +89,10 @@ This feature provides a convenient way for users to share shortened URLs, especi
       ```sh
       sudo service redis-server start
       ```
-        ```sh
-        redis-server
-        ```
+      or
+      ```sh
+      redis-server
+      ```
 
 3. Set up the PostgreSQL database:
     - Install PostgreSQL from [here](https://www.postgresql.org/download/).
