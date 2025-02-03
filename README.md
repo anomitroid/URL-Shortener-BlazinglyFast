@@ -19,11 +19,25 @@ The application includes comprehensive error handling to manage various error sc
 ### Simple Web Form Interface
 The application provides a simple web form interface for users to input URLs and receive shortened URLs. The form is defined in the [templates/index.html](url_app/src/templates/index.html) file, and the form submission is handled by the `index_handler` function in the [handlers/frontend.rs](url_app/src/handlers/frontend.rs) file.
 
-### Extra Feature: QR Code Generation
+### Rate Limiting
+The application includes a rate-limiting feature to prevent abuse and ensure fair usage. This is implemented using Redis and the `bb8` crate for connection pooling.
 
+#### How It Works
+1. **Request Tracking**: Each incoming request is tracked using a unique identifier (e.g., IP address).
+2. **Redis Storage**: The request count is stored in Redis with an expiration time.
+3. **Rate Limiting Logic**: The application checks the request count against a predefined limit. If the limit is exceeded, the request is rejected with an appropriate error message.
+
+#### Implementation Details
+- **Redis Connection Pool**: The `bb8` crate is used to manage a pool of Redis connections, ensuring efficient and concurrent access to Redis.
+- **Rate Limiting Middleware**: A middleware component intercepts incoming requests, updates the request count in Redis, and enforces the rate limit.
+
+The rate-limiting logic is implemented in the [handlers/api.rs](url_app/src/handlers/api.rs) file:
+This feature helps maintain the application's performance and reliability by preventing excessive usage from any single user.
+
+### Extra Feature: QR Code Generation
 The application includes an additional feature to generate QR codes for shortened URLs, enhancing the ease of sharing and accessibility. This functionality is implemented using the `to_svg_to_string` function within the `qrcode-generator` crate located in the [handlers/api.rs](url_app/src/handlers/api.rs) file. When a URL is shortened, a corresponding QR code is generated. The generated QR code is then displayed alongside the shortened URL in the web form interface.
 
-### How It Works
+#### How It Works
 1. **URL Shortening**: When a user submits a URL to be shortened, the application generates a short ID for the URL.
 2. **QR Code Generation**: Simultaneously, the `to_svg_to_string` function creates a QR code for the shortened URL using the `qrcode-generator` crate.
 3. **Storage**: The QR code image is added to the Database corresponding to the short ID.
@@ -36,6 +50,7 @@ This feature provides a convenient way for users to share shortened URLs, especi
 ### Prerequisites
 - Rust
 - PostgreSQL
+- Redis
 
 ### Installation
 1. Clone the repository:
@@ -44,7 +59,41 @@ This feature provides a convenient way for users to share shortened URLs, especi
     cd URL-Shortener-BlazinglyFast/url_app
     ```
 
-2. Set up the PostgreSQL database:
+2. Install Redis server:
+
+    **For Windows:**
+    - Follow the instructions provided by Microsoft to install WSL (Windows Subsystem for Linux). The default Linux distribution installed is typically Ubuntu.
+    - Once Ubuntu is running on Windows, add the Redis repository to the apt index, update it, and install Redis:
+        ```sh
+        sudo apt-add-repository ppa:redislabs/redis
+        sudo apt-get update
+        sudo apt-get upgrade
+        sudo apt-get install redis-server
+        ```
+    - Start the Redis server:
+        ```sh
+        sudo service redis-server start
+        ```
+        or
+        ```sh
+        redis-server
+        ```
+
+    **For Linux:**
+    - Install Redis using your package manager:
+      ```sh
+      sudo apt update
+      sudo apt install redis-server
+      ```
+    - Start the Redis server:
+      ```sh
+      sudo service redis-server start
+      ```
+        ```sh
+        redis-server
+        ```
+
+3. Set up the PostgreSQL database:
     - Install PostgreSQL from [here](https://www.postgresql.org/download/).
     - Create a new database:
       ```sh
@@ -52,19 +101,21 @@ This feature provides a convenient way for users to share shortened URLs, especi
       CREATE DATABASE url_app;
       ```
 
-3. Configure the database connection:
+4. Configure the database connection:
     - Create a `.env` file in the [url_app](http://_vscodecontentref_/1) directory with the following content:
       ```env
-      DATABASE_URL=postgres://username:password@localhost/url_app
+      DATABASE_URL=postgresql://username:password@localhost/url_app
+      BASE_URL=http://localhost:3000
+      REDIS_URL=redis://localhost/
       ```
 
-4. Run database migrations:
+5. Run database migrations:
     ```sh
     cargo install sqlx-cli
     sqlx migrate run
     ```
 
-5. Run the application:
+6. Run the application:
     ```sh
     cargo run
     ```
@@ -74,7 +125,7 @@ This feature provides a convenient way for users to share shortened URLs, especi
 2. Enter a URL in the input field and click "Shorten URL".
 3. The shortened URL will be displayed, and you can use it to redirect to the original URL.
 
-## Customizing the Port
+### Customizing the Port
 
 By default, the application runs on port `3000`. You can change this to any port you prefer by setting the `PORT` environment variable in the `.env` file.
 
